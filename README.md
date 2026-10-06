@@ -8,8 +8,8 @@
 ## Project Objective
 
 This repository demonstrates a complete, reproducible local-development
-scaffold for an AI agent application — a git repository, a Python virtual
-environment with installed dependencies, a set of fictional Markdown
+scaffold for an AI agent application — a git repository, a `uv`-managed
+Python environment with installed dependencies, a set of fictional Markdown
 knowledge-base documents, and the application skeleton (ingestion, agent
 logic, tools, permissions, logging) that will eventually answer questions
 over those documents — using a fictional real estate development
@@ -22,7 +22,9 @@ to show the end-to-end project layout rather than a working agent.
 ```
 .
 ├── README.md                      # this file
-├── requirements.txt                # Python dependencies (Faker, pandas)
+├── pyproject.toml                  # project metadata + dependencies (uv)
+├── uv.lock                         # locked dependency versions (uv)
+├── .python-version                 # pinned Python version (3.13)
 ├── scripts/
 │   └── generate_price_list.py      # generates synthetic unit price data
 ├── data/
@@ -51,7 +53,7 @@ to show the end-to-end project layout rather than a working agent.
 
 ## Status
 
-`data/`, `requirements.txt`, and `scripts/generate_price_list.py` are
+`data/`, `pyproject.toml`, and `scripts/generate_price_list.py` are
 fully built out. Everything under `src/` and `tests/` is currently a
 placeholder stub (purpose comment + `TODO`) establishing the project
 layout; the actual ingestion/agent/tool/permission/logging logic will be
@@ -59,27 +61,24 @@ implemented in a later stage.
 
 ## Setup
 
-1. **Create the virtual environment** (already done in this repo under `venv/`,
-   which is git-ignored — recreate it if cloning fresh):
+This project uses [`uv`](https://docs.astral.sh/uv/) for Python
+environment and dependency management — no manual venv activation needed.
+
+1. **Install dependencies** (creates `.venv/` and `uv.lock` automatically):
    ```powershell
-   py -3 -m venv venv
+   uv sync
    ```
 
-2. **Activate it**:
+2. **Generate the synthetic price list**:
    ```powershell
-   .\venv\Scripts\Activate.ps1
-   ```
-
-3. **Install dependencies**:
-   ```powershell
-   pip install -r requirements.txt
-   ```
-
-4. **Generate the synthetic price list**:
-   ```powershell
-   python scripts\generate_price_list.py
+   uv run python scripts\generate_price_list.py
    ```
    This writes `data/price_list.csv`, which `data/pricing.md` summarizes.
+
+3. **Add a new dependency** (updates `pyproject.toml` + `uv.lock`):
+   ```powershell
+   uv add <package-name>
+   ```
 
 ## Dependencies
 
