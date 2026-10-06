@@ -1,0 +1,41 @@
+unit_code,floor,unit_type,size_sqm,price,status,listing_agent
+SM-012,1,1 Bedroom,57,185100,Reserved,Allison Hill
+SM-013,1,2 Bedroom,86,279300,Sold,Noah Rhodes
+SM-014,1,3 Bedroom,116,376800,Available,Angie Henderson
+SM-011,1,Penthouse,173,561900,Reserved,Daniel Wagner
+SM-022,2,Studio,38,125200,Sold,Cristian Santos
+SM-023,2,1 Bedroom,57,187900,Available,Connie Lawrence
+SM-024,2,2 Bedroom,86,283500,Reserved,Abigail Shaffer
+SM-021,2,3 Bedroom,116,382300,Sold,Gina Moore
+SM-032,3,Penthouse,173,578500,Available,Gabrielle Davis
+SM-033,3,Studio,38,127100,Reserved,Ryan Munoz
+SM-034,3,1 Bedroom,57,190600,Sold,Monica Herrera
+SM-031,3,2 Bedroom,86,287600,Available,Jamie Arnold
+SM-042,4,3 Bedroom,116,393500,Reserved,Lisa Hensley
+SM-043,4,Penthouse,173,586800,Sold,Michele Williams
+SM-044,4,Studio,38,128900,Available,Dylan Miller
+SM-041,4,1 Bedroom,57,193300,Reserved,Brian Ramirez
+SM-052,5,2 Bedroom,86,295800,Sold,Holly Wood
+SM-053,5,3 Bedroom,116,399000,Available,Derek Zuniga
+SM-054,5,Penthouse,173,595100,Reserved,Lisa Jackson
+SM-051,5,Studio,38,130700,Sold,Carla Gray
+SM-062,6,1 Bedroom,57,198800,Available,Margaret Hawkins DDS
+SM-063,6,2 Bedroom,86,300000,Reserved,Patty Perez
+SM-064,6,3 Bedroom,116,404600,Sold,Ethan Adams
+SM-061,6,Penthouse,173,603400,Available,Tommy Walter
+SM-072,7,Studio,38,134400,Reserved,Matthew Foster
+SM-073,7,1 Bedroom,57,201600,Sold,Judy Baker
+SM-074,7,2 Bedroom,86,304100,Available,Justin Baker
+SM-071,7,3 Bedroom,116,410200,Reserved,Stephanie Ross
+SM-082,8,Penthouse,173,620000,Sold,Zachary Hicks
+SM-083,8,Studio,38,136200,Available,Anthony Rodriguez
+SM-084,8,1 Bedroom,57,204300,Reserved,Rebecca Henderson
+SM-081,8,2 Bedroom,86,308200,Sold,James Ferrell
+SM-092,9,3 Bedroom,116,421300,Available,Tricia Valencia
+SM-093,9,Penthouse,173,628300,Reserved,Nathan Maldonado
+SM-094,9,Studio,38,138000,Sold,Debra Davidson
+SM-091,9,1 Bedroom,57,207000,Available,Jeffrey Chavez
+SM-102,10,2 Bedroom,86,316500,Reserved,Sherri Baker
+SM-103,10,3 Bedroom,116,426900,Sold,Cassandra Gaines
+SM-104,10,Penthouse,173,636600,Available,Elizabeth Fowler
+SM-101,10,Studio,38,139800,Reserved,Brittany Farmer
