@@ -50,4 +50,4 @@
 
 - Two basement levels with EV-charging-ready bays.
 - Private storage cages available for an additional fictional fee — see
-  [Price List](price_list.md).
+  [Price List](pricing.md).

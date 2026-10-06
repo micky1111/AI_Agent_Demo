@@ -37,6 +37,6 @@ a wraparound terrace, and a private storage room.
 
 - All dimensions above are fictional approximations used by
   `scripts/generate_price_list.py` to generate the synthetic
-  [Price List](price_list.md).
+  [Price List](pricing.md).
 - Actual room configurations vary slightly by floor position; see the
   per-unit `size_sqm` field in `data/price_list.csv`.

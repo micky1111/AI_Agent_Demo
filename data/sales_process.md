@@ -6,14 +6,14 @@ A fictional end-to-end purchase flow for a prospective buyer.
 
 ## Step 1 — Browse Availability
 
-Review the [Price List](price_list.md) and [Floor Plans](floor_plans.md)
+Review the [Price List](pricing.md) and [Floor Plans](floor_plans.md)
 to shortlist candidate units by type, floor, and budget.
 
 ## Step 2 — Reserve a Unit
 
 Pay the fictional reservation deposit described in
 [Payment Terms](payment_terms.md). This holds the unit at the quoted
-price for 7 days, per [Company Policies](company_policies.md).
+price for 7 days, per [Company Policies](policies.md).
 
 ## Step 3 — Sign the Sale & Purchase Agreement (SPA)
 

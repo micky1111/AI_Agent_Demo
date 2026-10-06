@@ -3,7 +3,7 @@
 > **SYNTHETIC / FICTIONAL DATA — for demo purposes only.**
 
 Fictional milestone-based payment schedule, expressed as a percentage of
-the final unit price shown in the [Price List](price_list.md).
+the final unit price shown in the [Price List](pricing.md).
 
 | Milestone                                   | % of Price | Notes (fictional)                         |
 |----------------------------------------------|-----------:|---------------------------------------------|
@@ -21,7 +21,7 @@ the final unit price shown in the [Price List](price_list.md).
 - Payments more than 14 days overdue accrue a fictional 1.5% monthly
   late fee on the outstanding milestone amount.
 - Payments more than 60 days overdue may result in cancellation per
-  [Company Policies](company_policies.md).
+  [Company Policies](policies.md).
 
 ## Early Settlement
 
@@ -31,7 +31,7 @@ the final unit price shown in the [Price List](price_list.md).
 ## Currency & Taxes
 
 - All figures are in fictional currency units and exclude VAT/transfer
-  taxes (see [Price List](price_list.md) notes).
+  taxes (see [Price List](pricing.md) notes).
 
 ## Financing
 

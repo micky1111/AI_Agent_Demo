@@ -5,8 +5,8 @@
 ## Nature of This Content
 
 All documents in this repository — including but not limited to the
-[Price List](price_list.md), [Technical Specifications](technical_specifications.md),
-[Company Policies](company_policies.md), [FAQ](faq.md),
+[Price List](pricing.md), [Technical Specifications](spec.md),
+[Company Policies](policies.md), [FAQ](faq.md),
 [Amenities](amenities.md), [Payment Terms](payment_terms.md),
 [Sales Process](sales_process.md), and [Floor Plans](floor_plans.md) —
 describe a **fictional** development ("Sunset Meadows Residences") and a

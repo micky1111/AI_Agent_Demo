@@ -10,11 +10,11 @@ and tooling workflow.
 **Q: How do I reserve a unit?**
 A: See [Sales Process](sales_process.md) for the fictional step-by-step
 flow, starting with a reservation deposit as described in
-[Company Policies](company_policies.md).
+[Company Policies](policies.md).
 
 **Q: What's included in the quoted price?**
 A: The base shell, standard finishes, and one parking space. Taxes and
-optional storage are extra — see [Price List](price_list.md).
+optional storage are extra — see [Price List](pricing.md).
 
 **Q: Can I customize my unit's finishes?**
 A: In this fictional scenario, buyers who reserve before structural
@@ -25,7 +25,7 @@ Premium) at an additional fictional cost.
 A: See [Payment Terms](payment_terms.md) for the milestone-based schedule.
 
 **Q: What technical standards does the building meet?**
-A: See [Technical Specifications](technical_specifications.md) for
+A: See [Technical Specifications](spec.md) for
 structural, MEP, and sustainability details (all fictional).
 
 **Q: What amenities are available?**
@@ -34,7 +34,7 @@ the gym, rooftop terrace, and co-working lounge.
 
 **Q: Can I cancel after signing the purchase agreement?**
 A: Cancellation terms depend on which payment milestone has been reached;
-see [Company Policies](company_policies.md) and [Payment Terms](payment_terms.md).
+see [Company Policies](policies.md) and [Payment Terms](payment_terms.md).
 
 **Q: Where can I see unit layouts?**
 A: See [Floor Plans](floor_plans.md) for text descriptions of each unit

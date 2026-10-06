@@ -4,7 +4,7 @@
 
 Sunset Meadows Residences is a fictional 10-floor residential development
 with 40 units across five layout types. The full machine-generated price
-list lives in [`data/price_list.csv`](../data/price_list.csv) (produced by
+list lives in `price_list.csv` (produced by
 `scripts/generate_price_list.py`). A representative sample is shown below.
 
 | Unit Code | Floor | Type       | Size (sqm) | Price (fictional currency units) | Status    |
@@ -21,7 +21,7 @@ list lives in [`data/price_list.csv`](../data/price_list.csv) (produced by
   and one parking space (see [Amenities](amenities.md)).
 - Prices increase marginally by floor to reflect view and elevation.
 - Published prices are indicative and subject to change until a reservation
-  agreement is signed — see [Company Policies](company_policies.md).
+  agreement is signed — see [Company Policies](policies.md).
 - VAT/transfer taxes (fictional, jurisdiction-dependent) are **not**
   included in the listed price.
 - For payment scheduling, see [Payment Terms](payment_terms.md).

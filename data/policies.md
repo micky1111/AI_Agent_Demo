@@ -21,7 +21,7 @@
 
 ## Price Change Policy
 
-- Prices published in the [Price List](price_list.md) may change without
+- Prices published in the [Price List](pricing.md) may change without
   notice for unsold, unreserved units.
 - Once a reservation deposit is accepted, the quoted price is locked for
   that unit for the duration of the hold period and subsequent SPA

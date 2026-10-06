@@ -20,7 +20,7 @@
 ## Parking & Storage
 
 - Secure basement parking across two levels, with EV-charging-ready
-  bays (see [Technical Specifications](technical_specifications.md)).
+  bays (see [Technical Specifications](spec.md)).
 - Private storage cages available for an additional fictional fee.
 
 ## Security
@@ -36,4 +36,4 @@
 - Fictional retail promenade with cafes and a grocery store, ground
   floor of the adjacent building.
 
-For how amenities factor into pricing, see [Price List](price_list.md).
+For how amenities factor into pricing, see [Price List](pricing.md).
