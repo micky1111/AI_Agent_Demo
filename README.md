@@ -10,12 +10,11 @@
 This repository demonstrates a complete, reproducible local-development
 scaffold for an AI agent application — a git repository, a `uv`-managed
 Python environment with installed dependencies, a set of fictional Markdown
-knowledge-base documents, and the application skeleton (ingestion, agent
-logic, tools, permissions, logging) that will eventually answer questions
-over those documents — using a fictional real estate development
-("Sunset Meadows Residences") as the subject matter. The `src/` modules
-are currently placeholders (see **Status** below); the goal right now is
-to show the end-to-end project layout rather than a working agent.
+knowledge-base documents, and an agent (ingestion, retrieval, and
+Firestore-backed write tools) that answers questions and performs actions
+over that knowledge base — using a fictional real estate development
+("Sunset Meadows Residences") as the subject matter. Some `src/` modules
+are still placeholders (see **Status** below).
 
 ## Repository Structure
 
@@ -43,16 +42,16 @@ to show the end-to-end project layout rather than a working agent.
 │   ├── agent.py                    # tool-calling agent loop
 │   ├── tools/
 │   │   ├── search_docs.py          # semantic search over the Chroma index
-│   │   └── firebase_ops.py         # Firestore write tools (update_apartment_status, create_task)
+│   │   └── firebase_ops.py         # Firestore tools: update_apartment_status, get_apartment_status, create_task
 │   ├── permissions.py              # access control (TODO)
 │   ├── logging_setup.py            # logging configuration (TODO)
 │   └── app.py                      # application entrypoint (TODO)
 ├── chroma_db/                      # persisted Chroma vector store (generated, gitignored)
 ├── secrets/
-│   ├── README.md                   # how to provision the Firebase service-account key
+│   ├── README.md                   # how to provision the Firebase service-account key (tracked)
 │   └── firebase-service-account.json  # (you provide this; gitignored)
 └── tests/
-    └── test_questions.md           # sample Q&A test cases (TODO)
+    └── test_questions.md           # manual regression checklist
 ```
 
 ## Status
@@ -61,9 +60,10 @@ to show the end-to-end project layout rather than a working agent.
 ingestion + retrieval pair, and the tool-calling agent (`src/agent.py`,
 `src/tools/firebase_ops.py`) are built and working — a single query
 returns relevant excerpts from the documents, and an instruction like
-"Update apartment 12 to sold" triggers a real Firestore write (see
-**Run the Agent** below). `permissions.py`, `logging_setup.py`, and
-`app.py` are still placeholder stubs (purpose comment + `TODO`).
+"Update unit SM-012 to sold" (after confirmation) triggers a real
+Firestore write (see **Run the Agent** below). `permissions.py`,
+`logging_setup.py`, and `app.py` are still placeholder stubs (purpose
+comment + `TODO`).
 
 ## Setup
 
@@ -92,7 +92,12 @@ Requires an `OPENAI_API_KEY` set in your environment (used for
 embeddings; no `.env` file needed if it's already a system/user env var).
 
 1. **Build the index** — loads `data/*.md` + `data/price_list.csv`,
-   chunks, embeds, and persists to `chroma_db/`:
+   chunks, embeds, and persists to `chroma_db/`. Safe to re-run any
+   time: it resets the Chroma collection first, so repeated runs don't
+   accumulate duplicate chunks. It also idempotently seeds Firestore's
+   `apartments` collection from the CSV (skipped with a warning if no
+   Firebase credentials are set up yet — see **Run the Agent** below;
+   existing docs, e.g. ones already updated live, are left untouched):
    ```powershell
    uv run python src\ingest.py
    ```
@@ -105,22 +110,37 @@ embeddings; no `.env` file needed if it's already a system/user env var).
 
 ## Run the Agent
 
-`src/agent.py` is a tool-calling agent that can both answer questions
-(via `search_knowledge_base`) and take real write actions against
-Firestore (`update_apartment_status`, `create_task`).
+`src/agent.py` is a tool-calling agent that can answer questions (via
+`search_knowledge_base`), look up a unit's live status (via
+`get_apartment_status`), and take real write actions against Firestore
+(`update_apartment_status`, `create_task`).
+
+Apartments are identified by `unit_code` everywhere — the same format
+used in `data/price_list.csv` (e.g. `"SM-012"`), not a bare number. This
+is deliberate: `update_apartment_status` checks the unit exists in
+Firestore before writing anything, so a bare/invalid code fails loudly
+instead of silently creating a bogus record.
+
+Write actions (`update_apartment_status`, `create_task`) print the
+proposed call and ask for `[y/N]` confirmation before executing — pass
+`--yes`/`-y` to skip the prompt (e.g. for scripted/non-interactive runs).
 
 1. **Provision a demo Firebase project** (not a real client's) — see
    [`secrets/README.md`](secrets/README.md) for the exact console steps.
    Save the downloaded key as `secrets/firebase-service-account.json`
    (gitignored), or point `FIREBASE_SERVICE_ACCOUNT_PATH` at it instead.
-2. **Run an instruction**:
+2. **Seed Firestore** (if you haven't already) by running the index
+   build above — it populates `apartments` from the CSV.
+3. **Run an instruction**:
    ```powershell
-   uv run python src\agent.py "Update apartment 12 to sold"
+   uv run python src\agent.py "Update unit SM-012 to sold"
    ```
-   This calls `update_apartment_status("12", "Sold")`, which upserts
-   `apartments/12` in Firestore. Other examples:
+   This calls `update_apartment_status("SM-012", "Sold")`, which updates
+   the existing `apartments/SM-012` doc (after you confirm). Other
+   examples:
    ```powershell
-   uv run python src\agent.py "Create a task to schedule a handover walkthrough for apartment 12"
+   uv run python src\agent.py "What is the status of unit SM-012?"
+   uv run python src\agent.py "Create a task to schedule a handover walkthrough for unit SM-012" --yes
    uv run python src\agent.py "What amenities does the building have?"
    ```
    The agent picks the right tool (or none, for pure Q&A) automatically.

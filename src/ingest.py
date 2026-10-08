@@ -7,6 +7,7 @@ Run directly to (re)build the index: `uv run python src/ingest.py`
 import csv
 from pathlib import Path
 
+import chromadb
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
@@ -60,6 +61,14 @@ def build_index() -> Chroma:
     csv_docs = load_csv_documents()
     chunks = chunk_documents(markdown_docs) + csv_docs
 
+    # Reset the collection first so re-running ingest rebuilds cleanly
+    # instead of appending duplicate chunks on top of the previous run.
+    client = chromadb.PersistentClient(path=str(PERSIST_DIR))
+    try:
+        client.delete_collection(COLLECTION_NAME)
+    except Exception:
+        pass  # collection didn't exist yet on a first run
+
     embeddings = OpenAIEmbeddings(model=EMBEDDING_MODEL)
     vectorstore = Chroma.from_documents(
         documents=chunks,
@@ -78,6 +87,17 @@ def build_index() -> Chroma:
 
 def main() -> None:
     build_index()
+
+    try:
+        from tools.firebase_ops import seed_apartments_from_csv
+
+        created = seed_apartments_from_csv(DATA_DIR / "price_list.csv")
+        print(
+            f"Seeded {created} new apartment doc(s) into Firestore "
+            "(existing docs — e.g. ones already updated live — were left untouched)."
+        )
+    except FileNotFoundError as e:
+        print(f"Skipped Firestore seeding (no credentials yet): {e}")
 
 
 if __name__ == "__main__":

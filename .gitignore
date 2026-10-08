@@ -4,4 +4,5 @@ __pycache__/
 .env
 CLAUDE.md
 chroma_db/
-secrets/*.*
+secrets/*
+!secrets/README.md

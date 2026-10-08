@@ -6,7 +6,8 @@
 ## Reservation Policy
 
 - A unit may be held for 7 calendar days with a refundable reservation
-  deposit of a fictional 5,000 currency units.
+  deposit equal to 2% of the unit's price (see
+  [Payment Terms](payment_terms.md) for the full milestone schedule).
 - Reservations are first-come, first-served and are not transferable
   between buyers without written approval.
 

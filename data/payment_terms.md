@@ -16,6 +16,23 @@ the final unit price shown in the [Price List](pricing.md).
 | Practical completion / handover               | 10%        | Includes final inspection walkthrough.      |
 | Title transfer & registration                 | 5%         | Final balance, due at closing.              |
 
+## Cancellation Schedule (Post-SPA)
+
+Once the Sale & Purchase Agreement is signed, the reservation deposit
+(2%) is forfeited on cancellation. The remaining amounts paid are
+refunded according to which milestone had been reached at the time of
+cancellation:
+
+| Milestone reached at cancellation           | Refund of amounts paid beyond the reservation deposit |
+|-----------------------------------------------|---------------------------------------------------------|
+| Before Foundation complete                     | 75%                                                      |
+| Foundation complete                            | 50%                                                      |
+| Structural frame complete                      | 25%                                                      |
+| Building envelope / facade complete or later   | Non-refundable                                           |
+
+This is the schedule referenced in [Company Policies](policies.md)'s
+Cancellation & Refund Policy.
+
 ## Late Payment
 
 - Payments more than 14 days overdue accrue a fictional 1.5% monthly
