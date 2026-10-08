@@ -40,27 +40,30 @@ to show the end-to-end project layout rather than a working agent.
 │   └── legal_disclaimer.md         # fictional-content legal disclaimer
 ├── src/
 │   ├── ingest.py                   # loads data/ + builds the Chroma index
-│   ├── agent.py                    # core agent loop (TODO)
+│   ├── agent.py                    # tool-calling agent loop
 │   ├── tools/
 │   │   ├── search_docs.py          # semantic search over the Chroma index
-│   │   └── firebase_ops.py         # Firebase read/write tool (TODO)
+│   │   └── firebase_ops.py         # Firestore write tools (update_apartment_status, create_task)
 │   ├── permissions.py              # access control (TODO)
 │   ├── logging_setup.py            # logging configuration (TODO)
 │   └── app.py                      # application entrypoint (TODO)
 ├── chroma_db/                      # persisted Chroma vector store (generated, gitignored)
+├── secrets/
+│   ├── README.md                   # how to provision the Firebase service-account key
+│   └── firebase-service-account.json  # (you provide this; gitignored)
 └── tests/
     └── test_questions.md           # sample Q&A test cases (TODO)
 ```
 
 ## Status
 
-`data/`, `pyproject.toml`, `scripts/generate_price_list.py`, and the RAG
-ingestion + retrieval pair (`src/ingest.py`, `src/tools/search_docs.py`)
-are fully built out — a single query returns relevant excerpts from the
-documents (see **Build & query the index** below). `agent.py`,
-`permissions.py`, `logging_setup.py`, `app.py`, and
-`tools/firebase_ops.py` are still placeholder stubs (purpose comment +
-`TODO`); the full agent loop will be implemented in a later stage.
+`data/`, `pyproject.toml`, `scripts/generate_price_list.py`, the RAG
+ingestion + retrieval pair, and the tool-calling agent (`src/agent.py`,
+`src/tools/firebase_ops.py`) are built and working — a single query
+returns relevant excerpts from the documents, and an instruction like
+"Update apartment 12 to sold" triggers a real Firestore write (see
+**Run the Agent** below). `permissions.py`, `logging_setup.py`, and
+`app.py` are still placeholder stubs (purpose comment + `TODO`).
 
 ## Setup
 
@@ -100,6 +103,28 @@ embeddings; no `.env` file needed if it's already a system/user env var).
    ```
    Prints the top matching excerpts with their source document.
 
+## Run the Agent
+
+`src/agent.py` is a tool-calling agent that can both answer questions
+(via `search_knowledge_base`) and take real write actions against
+Firestore (`update_apartment_status`, `create_task`).
+
+1. **Provision a demo Firebase project** (not a real client's) — see
+   [`secrets/README.md`](secrets/README.md) for the exact console steps.
+   Save the downloaded key as `secrets/firebase-service-account.json`
+   (gitignored), or point `FIREBASE_SERVICE_ACCOUNT_PATH` at it instead.
+2. **Run an instruction**:
+   ```powershell
+   uv run python src\agent.py "Update apartment 12 to sold"
+   ```
+   This calls `update_apartment_status("12", "Sold")`, which upserts
+   `apartments/12` in Firestore. Other examples:
+   ```powershell
+   uv run python src\agent.py "Create a task to schedule a handover walkthrough for apartment 12"
+   uv run python src\agent.py "What amenities does the building have?"
+   ```
+   The agent picks the right tool (or none, for pure Q&A) automatically.
+
 ## Dependencies
 
 - [`Faker`](https://faker.readthedocs.io/) — generates plausible but fake
@@ -114,6 +139,8 @@ embeddings; no `.env` file needed if it's already a system/user env var).
 - [`langchain-chroma`](https://python.langchain.com/docs/integrations/vectorstores/chroma/)
   — persists/queries the local [Chroma](https://www.trychroma.com/)
   vector store.
+- [`firebase-admin`](https://firebase.google.com/docs/admin/setup) —
+  server-side Firestore reads/writes used by `src/tools/firebase_ops.py`.
 
 ## Disclaimer
 

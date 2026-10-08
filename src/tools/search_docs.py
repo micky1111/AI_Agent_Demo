@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from langchain_chroma import Chroma
+from langchain_core.tools import tool
 from langchain_openai import OpenAIEmbeddings
 
 PERSIST_DIR = Path(__file__).resolve().parent.parent.parent / "chroma_db"
@@ -32,6 +33,13 @@ def search_docs(query: str, k: int = 4) -> list[dict]:
         {"source": doc.metadata.get("source"), "content": doc.page_content}
         for doc in results
     ]
+
+
+@tool
+def search_knowledge_base(query: str) -> str:
+    """Search the company's Markdown knowledge base and price list for relevant information."""
+    results = search_docs(query, k=4)
+    return "\n\n".join(f"[{r['source']}]\n{r['content']}" for r in results)
 
 
 def main() -> None:
