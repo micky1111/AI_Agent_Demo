@@ -39,25 +39,28 @@ to show the end-to-end project layout rather than a working agent.
 │   ├── floor_plans.md              # unit type/layout descriptions
 │   └── legal_disclaimer.md         # fictional-content legal disclaimer
 ├── src/
-│   ├── ingest.py                   # loads data/*.md into a search index (TODO)
+│   ├── ingest.py                   # loads data/ + builds the Chroma index
 │   ├── agent.py                    # core agent loop (TODO)
 │   ├── tools/
-│   │   ├── search_docs.py          # doc search tool (TODO)
+│   │   ├── search_docs.py          # semantic search over the Chroma index
 │   │   └── firebase_ops.py         # Firebase read/write tool (TODO)
 │   ├── permissions.py              # access control (TODO)
 │   ├── logging_setup.py            # logging configuration (TODO)
 │   └── app.py                      # application entrypoint (TODO)
+├── chroma_db/                      # persisted Chroma vector store (generated, gitignored)
 └── tests/
     └── test_questions.md           # sample Q&A test cases (TODO)
 ```
 
 ## Status
 
-`data/`, `pyproject.toml`, and `scripts/generate_price_list.py` are
-fully built out. Everything under `src/` and `tests/` is currently a
-placeholder stub (purpose comment + `TODO`) establishing the project
-layout; the actual ingestion/agent/tool/permission/logging logic will be
-implemented in a later stage.
+`data/`, `pyproject.toml`, `scripts/generate_price_list.py`, and the RAG
+ingestion + retrieval pair (`src/ingest.py`, `src/tools/search_docs.py`)
+are fully built out — a single query returns relevant excerpts from the
+documents (see **Build & query the index** below). `agent.py`,
+`permissions.py`, `logging_setup.py`, `app.py`, and
+`tools/firebase_ops.py` are still placeholder stubs (purpose comment +
+`TODO`); the full agent loop will be implemented in a later stage.
 
 ## Setup
 
@@ -80,12 +83,37 @@ environment and dependency management — no manual venv activation needed.
    uv add <package-name>
    ```
 
+## Build & Query the RAG Index
+
+Requires an `OPENAI_API_KEY` set in your environment (used for
+embeddings; no `.env` file needed if it's already a system/user env var).
+
+1. **Build the index** — loads `data/*.md` + `data/price_list.csv`,
+   chunks, embeds, and persists to `chroma_db/`:
+   ```powershell
+   uv run python src\ingest.py
+   ```
+
+2. **Query it**:
+   ```powershell
+   uv run python src\tools\search_docs.py "What is the cancellation policy?"
+   ```
+   Prints the top matching excerpts with their source document.
+
 ## Dependencies
 
 - [`Faker`](https://faker.readthedocs.io/) — generates plausible but fake
   names/labels used in the synthetic data.
 - [`pandas`](https://pandas.pydata.org/) — builds and exports the tabular
   price list data.
+- [`langchain-core`](https://python.langchain.com/) /
+  [`langchain-text-splitters`](https://python.langchain.com/) — document
+  and chunking abstractions used by `src/ingest.py`.
+- [`langchain-openai`](https://python.langchain.com/docs/integrations/platforms/openai/)
+  — OpenAI embeddings (`text-embedding-3-small`).
+- [`langchain-chroma`](https://python.langchain.com/docs/integrations/vectorstores/chroma/)
+  — persists/queries the local [Chroma](https://www.trychroma.com/)
+  vector store.
 
 ## Disclaimer
 
